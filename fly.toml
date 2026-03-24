@@ -1,23 +1,41 @@
-# fly.toml app configuration file generated for app-dawn-wildflower-2201 on 2026-03-24T20:26:13Z
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
-app = 'app-dawn-wildflower-2201'
-primary_region = 'iad'
+# fly.toml generated for Terraria / tModLoader server
+app = "app-dawn-wildflower-2201"
+primary_region = "iad"
 
 [build]
+  dockerfile = "Dockerfile"
 
-[http_service]
-  internal_port = 8080
-  force_https = true
-  auto_stop_machines = 'stop'
+[env]
+  TMOD_PORT = "7777"
+  TMOD_WORLDNAME = "Docker"
+  TMOD_MAXPLAYERS = "8"
+  TMOD_PASS = "docker"
+
+[mounts]
+  source = "terraria_data"
+  destination = "/data"
+
+[[services]]
+  internal_port = 7777
+  protocol = "tcp"
+  auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
-  processes = ['app']
 
-[[vm]]
-  memory = '1gb'
-  cpu_kind = 'shared'
+  [[services.ports]]
+    port = 7777
+
+[[services]]
+  internal_port = 7777
+  protocol = "udp"
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[services.ports]]
+    port = 7777
+
+[vm]
+  cpu_kind = "shared"
   cpus = 1
-  memory_mb = 256
+  memory_mb = 2048 # Terraria/tModLoader can be memory-intensive
