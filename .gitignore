@@ -1,0 +1,15 @@
+# Common ignores
+temp/
+data/
+world/*.wld*
+world/*.sqlite
+world/tshock.pid
+steamMods/
+tModLoader/
+*.log
+*.zip
+*.tar.gz
+*.iso
+*.iso.gz
+node_modules/
+.DS_Store

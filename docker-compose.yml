@@ -1,0 +1,30 @@
+services:
+  terraria:
+    image: ryshe/terraria:vanilla-1.4.5.5
+    container_name: terraria_vanilla
+    restart: unless-stopped
+    ports:
+      - "7777:7777"
+    volumes:
+      - ./world:/root/.local/share/Terraria/Worlds
+      - ./config:/config
+    environment:
+      - WORLD_NAME=Puerto
+      - WORLD_SIZE=3
+      - WORLD_SEED=fire
+      - DIFFICULTY=3
+      - MAX_PLAYERS=16
+      - PASSWORD=secret
+      - MOTD=Bienvenidos al server de Killtrayer 🤘
+      - AUTOSAVE_INTERVAL=10
+    command: -world /root/.local/share/Terraria/Worlds/Puerto.wld -autocreate 3 -maxplayers 16 -password secret -difficulty 3 -seed fire
+    tty: true
+    stdin_open: true
+
+  playit:
+    image: ghcr.io/playit-cloud/playit-agent:0.17
+    container_name: playit_tunnel
+    restart: unless-stopped
+    network_mode: host
+    environment:
+    - SECRET_KEY=478aa25bca7cfda19d8e3aaee9ccc3da740ae0dea530ef304e89501af958aed4
