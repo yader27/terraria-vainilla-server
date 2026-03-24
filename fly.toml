@@ -1,4 +1,4 @@
-# fly.toml generated for Terraria / tModLoader server
+# fly.toml corrected for Vanilla Terraria server on Fly.io
 app = "terraria-vainilla-server"
 
 primary_region = "iad"
@@ -7,16 +7,23 @@ primary_region = "iad"
   dockerfile = "Dockerfile"
 
 [env]
-  TMOD_PORT = "7777"
-  TMOD_WORLDNAME = "Docker"
-  TMOD_MAXPLAYERS = "8"
-  TMOD_PASS = "docker"
+  WORLD_NAME = "Puerto"
+  WORLD_SIZE = "3"
+  WORLD_SEED = "fire"
+  DIFFICULTY = "3"
+  MAX_PLAYERS = "16"
+  PASSWORD = "secret"
+  MOTD = "Bienvenidos al server de Killtrayer 🤘"
+
+[processes]
+  app = "/terraria-server/TerrariaServer.bin.x86_64 -server -world /root/.local/share/Terraria/Worlds/Puerto.wld -autocreate 3 -maxplayers 16 -password secret -difficulty 3 -seed fire"
 
 [mounts]
   source = "terraria_data"
-  destination = "/data"
+  destination = "/root/.local/share/Terraria/Worlds"
 
 [[services]]
+  processes = ["app"] # Link this service to the 'app' process
   internal_port = 7777
   protocol = "tcp"
   auto_stop_machines = true
@@ -27,6 +34,7 @@ primary_region = "iad"
     port = 7777
 
 [[services]]
+  processes = ["app"] # Link this service to the 'app' process
   internal_port = 7777
   protocol = "udp"
   auto_stop_machines = true
@@ -39,4 +47,5 @@ primary_region = "iad"
 [vm]
   cpu_kind = "shared"
   cpus = 1
-  memory_mb = 2048 # Terraria/tModLoader can be memory-intensive
+  memory_mb = 2048
+
