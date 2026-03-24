@@ -1,5 +1,6 @@
 # fly.toml generated for Terraria / tModLoader server
-app = "app-dawn-wildflower-2201"
+app = "terraria-vainilla-server"
+
 primary_region = "iad"
 
 [build]
