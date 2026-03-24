@@ -1,0 +1,41 @@
+# fly.toml generated for Terraria / tModLoader server
+app = "app-dawn-wildflower-2201"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  TMOD_PORT = "7777"
+  TMOD_WORLDNAME = "Docker"
+  TMOD_MAXPLAYERS = "8"
+  TMOD_PASS = "docker"
+
+[mounts]
+  source = "terraria_data"
+  destination = "/data"
+
+[[services]]
+  internal_port = 7777
+  protocol = "tcp"
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[services.ports]]
+    port = 7777
+
+[[services]]
+  internal_port = 7777
+  protocol = "udp"
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[services.ports]]
+    port = 7777
+
+[vm]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 2048 # Terraria/tModLoader can be memory-intensive
